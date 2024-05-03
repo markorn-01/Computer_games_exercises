@@ -51,7 +51,8 @@ func _ready():
 
 func _on_button_pressed():
 	# Set the button to be pressed at least once
-	button_pressed = true
+	if not button_pressed:
+		button_pressed = true
 	
 	# Switch the activate status of the counter
 	counter_active = not counter_active
