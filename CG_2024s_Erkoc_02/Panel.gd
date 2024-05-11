@@ -54,5 +54,13 @@ func _draw():
 # What could be further improved for this implementation when there are more than 100 states?
 #
 # When dealing with a large number of states, using a dictionary lookup-based approach might be inefficient
-# regarding speed and memory efficiency. In such cases, using an array or a more memory friendly data structure
-# might be a more optimal solution.
+# regarding speed and memory efficiency. In such cases, using an array with indexing for each of its element
+# would be a more optimal solution. 
+# For example: 
+# STATES = ["BED", "HOME", "WORK"]
+# COLORS = [Color.GREEN, Color.BLUE, Color.RED]
+# curr_state_idx = 0
+# then using STATES[curr_state_idx] and COLORS[curr_state_idx] to access each elements in those arrays
+#
+# Moreover, a design pattter like Finite State Machine can be applied to better organize logic 
+# and maintain code easily.

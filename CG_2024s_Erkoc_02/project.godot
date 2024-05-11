@@ -12,8 +12,12 @@ config_version=5
 
 config/name="CG_2024s_Erkoc_02"
 run/main_scene="res://panel.tscn"
-config/features=PackedStringArray("4.0", "Forward Plus")
+config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="CG_2024s_Erkoc_02"
 
 [input]
 
