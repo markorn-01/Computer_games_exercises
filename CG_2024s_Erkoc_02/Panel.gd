@@ -51,5 +51,8 @@ func _draw():
 # The _process() function continuously checks for key presses and updates the current state and panel color accordingly.
 # The Label text is updated to display the current state using the STATES dictionary as well.
 
-
-# 
+# What could be further improved for this implementation when there are more than 100 states?
+#
+# When dealing with a large number of states, using a dictionary lookup-based approach might be inefficient
+# regarding speed and memory efficiency. In such cases, using an array or a more memory friendly data structure
+# might be a more optimal solution.
