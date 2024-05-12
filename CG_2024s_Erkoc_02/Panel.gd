@@ -62,5 +62,5 @@ func _draw():
 # curr_state_idx = 0
 # then using STATES[curr_state_idx] and COLORS[curr_state_idx] to access each elements in those arrays
 #
-# Moreover, a design pattter like Finite State Machine can be applied to better organize logic 
+# Moreover, a design pattern like Finite State Machine can be applied to better organize logic 
 # and maintain code easily.
