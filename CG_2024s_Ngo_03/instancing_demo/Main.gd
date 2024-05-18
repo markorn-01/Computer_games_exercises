@@ -1,4 +1,4 @@
-# Name: 	   Quang Minh, Ngo;      student no.: 4742554
+# Name:        Quang Minh, Ngo;      student no.: 4742554
 # Coauthor:    Taha Beytullah Erkoc; student no.: 4740805
 # faculty:     Mathematics and Computer Science
 # discipline:  Data and Computer Science
