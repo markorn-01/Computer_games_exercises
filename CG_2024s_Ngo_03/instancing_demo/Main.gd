@@ -49,7 +49,7 @@ func _on_child_entered_tree(node):
 # This central node will emit a signal whenever there is a message to broadcast.
 # Any node that wants to receive this message can connect to the central node.
 # If by broadcasting it is meant that each node should be able to receive a message
-# without having to be subscribed to a publisher, this cannot be realized in Godot
-# using signals. 
+# without having to be subscribed to a publisher, this cannot be realized in
+# Godot using signals. 
 
 
