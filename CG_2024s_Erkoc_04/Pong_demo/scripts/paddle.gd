@@ -5,7 +5,7 @@ const MOVE_SPEED = 100
 var _ball_dir
 var _up
 var _down
-
+var origin_pos
 @onready var _screen_size_y = get_viewport_rect().size.y
 
 func _ready():
@@ -13,6 +13,7 @@ func _ready():
 	_up = n + "_move_up"
 	_down = n + "_move_down"
 	_ball_dir = 1 if n == "left" else -1
+	origin_pos = position.y
 
 
 func _process(delta):
@@ -21,6 +22,8 @@ func _process(delta):
 	# Since the scene's height was originally 400 and increased to 500 later, the maximum should be -100
 	position.y = clamp(position.y + input * MOVE_SPEED * delta, 16, _screen_size_y - 16 - 100)
 
+func reset():
+	position.y = origin_pos
 
 func _on_area_entered(area):
 	if area.name == "Ball":
