@@ -15,7 +15,6 @@ func _ready():
 	_ball_dir = 1 if n == "left" else -1
 	origin_pos = position.y
 
-
 func _process(delta):
 	# Move up and down based on input.
 	var input = Input.get_action_strength(_down) - Input.get_action_strength(_up)

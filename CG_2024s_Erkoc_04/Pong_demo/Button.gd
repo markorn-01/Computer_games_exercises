@@ -20,7 +20,6 @@ func _ready():
 func _process(delta):
 	pass
 
-
 func _on_pressed():
 	ball.reset()
 	label_point_a.text = '0'

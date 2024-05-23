@@ -1,4 +1,5 @@
 res://pong.tscn
-res://Button.gd
 res://scripts/paddle.gd
+res://scripts/wall.gd
 res://scripts/ball.gd
+res://Button.gd
