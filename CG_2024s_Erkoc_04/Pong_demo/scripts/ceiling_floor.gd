@@ -1,3 +1,8 @@
+# Name:     Taha Beytullah Erkoc; student no.: 4740805
+# Coauthor: Quang Minh, Ngo;      student no.: 4742554
+# faculty:     Mathematics and Computer Science
+# discipline:  Data and Computer Science
+
 extends Area2D
 
 @export var _bounce_direction = 1
