@@ -24,7 +24,7 @@ func _ready():
 func _process(delta):
 	# Move up and down based on input.
 	var input = Input.get_action_strength(_down) - Input.get_action_strength(_up)
-	print(input)
+	print(Input.get_action_strength(_up))
 	# Since the scene's height was originally 400 and increased to 500 later, the maximum should be -100
 	position.y = clamp(position.y + input * MOVE_SPEED * delta, 16, _screen_size_y - 16 - 100)
 
