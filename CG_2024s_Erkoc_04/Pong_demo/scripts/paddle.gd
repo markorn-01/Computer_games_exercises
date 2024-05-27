@@ -15,6 +15,7 @@ var origin_pos
 
 func _ready():
 	var n = name.to_lower()
+	print(n)
 	_up = n + "_move_up"
 	_down = n + "_move_down"
 	_ball_dir = 1 if n == "left" else -1
@@ -23,11 +24,13 @@ func _ready():
 func _process(delta):
 	# Move up and down based on input.
 	var input = Input.get_action_strength(_down) - Input.get_action_strength(_up)
+	print(input)
 	# Since the scene's height was originally 400 and increased to 500 later, the maximum should be -100
 	position.y = clamp(position.y + input * MOVE_SPEED * delta, 16, _screen_size_y - 16 - 100)
 
 func reset():
 	position.y = origin_pos
+	#pass
 
 func _on_area_entered(area):
 	if area.name == "Ball":
