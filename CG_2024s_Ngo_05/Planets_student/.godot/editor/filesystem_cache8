@@ -1,7 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1717330869
-CameraPivot.gd::GDScript::-1::1716825798::0::1::::<>Marker3D<>::
-icon.svg::CompressedTexture2D::599324105648343857::1713296078::1716825427::1::::<><>::
-main.gd::GDScript::-1::1716978275::0::1::::<>Node<>::
-main.tscn::PackedScene::1368678760616889022::1716978207::0::1::::<><>::res://main.gd<>res://CameraPivot.gd<>res://Sun.gd
-Sun.gd::GDScript::-1::1716827300::0::1::::<>RigidBody3D<>::
+::res://::1717333388
+CameraPivot.gd::GDScript::-1::1717333319::0::1::::<>Marker3D<>::
+icon.svg::CompressedTexture2D::599324105648343857::1716839240::1716839240::1::::<><>::
+main.gd::GDScript::-1::1717333319::0::1::::<>Node<>::
+main.tscn::PackedScene::1368678760616889022::1716839240::0::1::::<><>::res://main.gd<>res://CameraPivot.gd<>res://Sun.gd
+Sun.gd::GDScript::-1::1716839240::0::1::::<>RigidBody3D<>::
