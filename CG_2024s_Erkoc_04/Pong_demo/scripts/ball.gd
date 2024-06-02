@@ -42,7 +42,7 @@ func reset():
 
 # Initially, we set the default speed and left direction for the ball. 
 # Then, the speed is increased by 2 times delta for each frame 
-# and the position is alculated based on new speed, delta, and new direction.
+# and the position is calculated based on new speed, delta, and new direction.
 # When there is a player reaching 3 points in a game, direction of the ball is set to the middle
 # and the speed of the ball is 0 (ball does not move).
 # Otherwise, when the ball hits to the end of one of the walls, the ball is reset 

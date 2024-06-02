@@ -1,6 +1,6 @@
 extends Marker3D
 
-var rotation_speed: float = 3.0  # degrees per second
+var rotation_speed: float = 20.0  # degrees per second
 var movement_speed: float = 3.0  # units per second
 
 # Called when the node enters the scene tree for the first time.

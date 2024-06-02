@@ -5,7 +5,7 @@ var moon_orbit_radius = 5
 var orbit_speed = 0.1
 var Earth
 var Moon
-var time_elapsed = 0
+var position = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -69,10 +69,10 @@ func _ready():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	time_elapsed += delta * orbit_speed
+	position += delta * orbit_speed
 	# Update the position of Earth and Moon based on time
-	update_earth_orbit_position(time_elapsed)
-	update_moon_orbit_position(time_elapsed * 20)
+	update_earth_orbit_position(position)
+	update_moon_orbit_position(position * 20)
 
 func update_earth_orbit_position(angle):
 	# Calculate the new position of Earth on the orbit
@@ -83,8 +83,24 @@ func update_earth_orbit_position(angle):
 	Earth.transform.origin = Vector3(x, 0, z)
 	
 func update_moon_orbit_position(angle):
+	# Calculate the new position of Moon on the orbit
 	var x = moon_orbit_radius * cos(angle)
 	var z = moon_orbit_radius * sin(angle)
 	
 	# Set the position of Moon relative to the Earth
 	Moon.transform.origin = Vector3(x, 0, z)
+
+# How are the objects organized in this game?
+# We have 3 objects: Sun, Earth, and Moon which the Sun acts as a central body.
+# Also, the Earth is the child of the Sun and Moon is the child of the Earth. 
+# Each Earth and Moon orbits around their central bodies (parent nodes).
+# Each planet includes a CSGMesh3D which represents its visual appearance,
+# and CollisionShape3D which represents the collision shape.
+
+# How is the global motion of the "Moon" realized in this game?
+# Every time frame, in the process function, 
+# the position of the Moon would be increased by the delta times the orbit speed
+# and times 20 because the orbit speed is for the Earth but not the Moon. 
+# Also, update_moon_orbit_position is triggered in the process function. 
+# This update function is used to calculate the new position of the Moon 
+# on the orbit based on the angle.
