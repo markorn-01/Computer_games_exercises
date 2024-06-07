@@ -63,8 +63,8 @@ func _process(delta):
 		record_actual()
 			
 func _draw():
-	if posNew:
-		draw_circle(posNew, 50, Color.RED)
+	var pos = nodeSprite.to_global(nodeSprite.get_position())
+	draw_circle(pos, 50, Color.RED)
 	
 func distance(x_object):
 	var x_wall_middle = nodeWall.points[0].x
