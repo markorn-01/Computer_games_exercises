@@ -47,7 +47,7 @@ text = "Speed V (pixel/s)"
 offset_left = 100.0
 offset_top = 80.0
 offset_right = 220.0
-offset_bottom = 100.0
+offset_bottom = 103.0
 text = "Interval T (s)"
 
 [node name="Time" type="SpinBox" parent="."]

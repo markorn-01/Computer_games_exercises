@@ -16,6 +16,7 @@ func _ready():
 	nodeFollow = get_node("Path/CharacterFollow")
 	nodeWall = get_node("Wall")
 	nodeSprite = get_node("Path/CharacterFollow/Sprite2D")
+	print("Initial position: ", $Wall.position.x)
 
 	set_process(false)
 	
@@ -46,12 +47,14 @@ func _process(delta):
 		else:
 			lastIntervalStart = currentTime
 			record_actual()
+			
+	posNew = nodeSprite.to_global(nodeSprite.get_position())
 	queue_redraw()
 			
 
 func _draw():
 	var pos = nodeSprite.global_position
-	draw_circle(pos, 5, Color(1, 0, 0))
+	draw_circle(pos, 5, Color.RED)
 	
 func distance():
 	var wall_left_pos = nodeWall.global_position.x - nodeWall.width/2
@@ -59,8 +62,12 @@ func distance():
 	var wall_middle_pos = (wall_left_pos + wall_right_pos) / 2
 	var obj_pos = nodeSprite.global_position.x
 	if obj_pos <= wall_middle_pos:
+		#print("I am left")
 		return wall_left_pos - obj_pos
-	return obj_pos - wall_right_pos
+	else:
+		#print("obj position ", obj_pos)
+		#print("distance right: ", obj_pos - wall_right_pos)
+		return obj_pos - wall_right_pos
 
 func fast_correction():
 	var t1 = (lastIntervalStart - timeStart) / 1000.0
