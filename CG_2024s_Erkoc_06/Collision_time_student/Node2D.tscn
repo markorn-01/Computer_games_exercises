@@ -13,7 +13,7 @@ point_count = 8
 script = ExtResource("2")
 
 [node name="Wall" type="Line2D" parent="."]
-points = PackedVector2Array(550, 0, 550, 600)
+points = PackedVector2Array(550, 0, 550, 257.347, 550, 600)
 width = 100.0
 default_color = Color(0.835294, 0.168627, 0.262745, 1)
 

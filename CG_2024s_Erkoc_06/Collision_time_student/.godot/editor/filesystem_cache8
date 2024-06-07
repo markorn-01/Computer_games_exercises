@@ -1,7 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1717745832
-CharacterFollow.gd::GDScript::-1::1717665438::0::1::::<>RefCounted<>::
-default_env.tres::Environment::8637291679980941048::1717665617::0::1::::<><>::
-icon.png::CompressedTexture2D::5367555879432337359::1717665438::1717665438::1::::<><>::
-Node2D.gd::GDScript::-1::1717665438::0::1::::<>Node2D<>::
-Node2D.tscn::PackedScene::9123810730510839034::1717665617::0::1::::<><>::uid://ciqc4jpvx1wkd::::res://icon.png<>res://Node2D.gd
+::res://::1717769001
+CharacterFollow.gd::GDScript::-1::1717616317::0::1::::<>RefCounted<>::
+default_env.tres::Environment::8637291679980941048::1717616317::0::1::::<><>::
+icon.png::CompressedTexture2D::5367555879432337359::1717616317::1717616317::1::::<><>::
+Node2D.gd::GDScript::-1::1717768935::0::1::::<>Node2D<>::
+Node2D.tscn::PackedScene::9123810730510839034::1717768935::0::1::::<><>::uid://ciqc4jpvx1wkd::::res://icon.png<>res://Node2D.gd

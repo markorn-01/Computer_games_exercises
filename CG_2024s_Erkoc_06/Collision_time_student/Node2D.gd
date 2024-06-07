@@ -10,90 +10,92 @@ var posOld
 var posNew
 
 var timeStart
-var lastIntervalStart
+var T1
+var T2
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _ready():
 	nodeFollow = get_node("Path/CharacterFollow")
 	nodeWall = get_node("Wall")
 	nodeSprite = get_node("Path/CharacterFollow/Sprite2D")
-	print("Initial position: ", $Wall.position.x)
-
+	
 	set_process(false)
 	
 func _on_Button_pressed():
 	timeStart = Time.get_ticks_msec()
 	nodeFollow.set_progress(0)
-	lastIntervalStart = timeStart
+	T1 = 0
+	posNew = nodeSprite.to_global(nodeSprite.get_position())
+	posOld = posNew
+	$ActualValueLabel.text = "(s)"
+	$FcValueLabel.text = "(s)"
+	$BisectionValueLabel.text = "(s)"
 	set_process(true)
 
 func _process(delta):
 	param_V = $Speed.value
 	param_T = $Time.value
 	
-	# update the position / progress
-	posOld = nodeSprite.to_global(nodeSprite.get_position())
-	
 	var progressNew = nodeFollow.get_progress() + param_V * delta
 	nodeFollow.set_progress(progressNew)
 	
-	var currentTime = Time.get_ticks_msec()
-	if (currentTime - lastIntervalStart) / 1000.0 >= param_T:
-		if distance() <= 0:
+	# get current position
+	posNew = nodeSprite.to_global(nodeSprite.get_position())
+	
+	T2 = (Time.get_ticks_msec() - timeStart) / 1000.0
+	var currentTimeInterval = T2 - T1
+	if  currentTimeInterval >= param_T:
+		# collision detected
+		if distance(posNew.x) <= 0:
 			set_process(false)
 			var fast_correction_t = fast_correction()
 			var bisection_t = bisection()
 			$FcValueLabel.text = str(snapped(fast_correction_t, 0.001))
 			$BisectionValueLabel.text = str(snapped(bisection_t, 0.001))
+		# no collision detected
 		else:
-			lastIntervalStart = currentTime
-			record_actual()
+			# set T2 as the beginning time T1 for next interval
+			T1 = T2
+			queue_redraw()
+		# update the position / progress
+		posOld = posNew
+		record_actual()
 			
-	posNew = nodeSprite.to_global(nodeSprite.get_position())
-	queue_redraw()
-			
-
 func _draw():
 	var pos = nodeSprite.global_position
-	draw_circle(pos, 5, Color.RED)
+	draw_circle(pos, 10, Color.RED)
 	
-func distance():
-	var wall_left_pos = nodeWall.global_position.x - nodeWall.width/2
-	var wall_right_pos = nodeWall.global_position.x + nodeWall.width/2 
-	var wall_middle_pos = (wall_left_pos + wall_right_pos) / 2
-	var obj_pos = nodeSprite.global_position.x
-	if obj_pos <= wall_middle_pos:
-		#print("I am left")
-		return wall_left_pos - obj_pos
+func distance(x_object):
+	var x_wall_middle = nodeWall.points[0].x
+	var x_wall_left = x_wall_middle - nodeWall.width/2
+	var x_wall_right = x_wall_middle + nodeWall.width/2 
+	if x_object <= x_wall_middle:
+		return x_wall_left - x_object
 	else:
-		#print("obj position ", obj_pos)
-		#print("distance right: ", obj_pos - wall_right_pos)
-		return obj_pos - wall_right_pos
+		return x_object - x_wall_right
 
 func fast_correction():
-	var t1 = (lastIntervalStart - timeStart) / 1000.0
-	var d = distance_at_last_interval()
-	return t1 + d / param_V
+	return T1 + distance(posOld.x) / param_V
 
 func bisection():
-	var t1 = (lastIntervalStart - timeStart) / 1000.0
-	var t2 = (Time.get_ticks_msec() - timeStart) / 1000.0 
+	var t1 = T1
+	var t2 = T2
 	var t_tilda
-	while abs(t1-t2) > param_T / 1000.0:
+	var x_t_tilda
+	var initial_pos = nodeFollow.get_progress()
+	while abs(t1-t2) > param_T / 1000:
 		t_tilda = (t1+t2) / 2.0
 		nodeFollow.set_progress(t_tilda * param_V)
-		if distance() < 0:
+		x_t_tilda = nodeSprite.to_global(nodeSprite.get_position()).x
+		if distance(x_t_tilda) < 0:
 			t1 = t_tilda
 		else:
 			t2 = t_tilda
+	nodeFollow.set_progress(initial_pos)
 	return t1
 
-func distance_at_last_interval():
-	nodeFollow.set_progress((lastIntervalStart - timeStart) / 1000.0 * param_V)
-	var distance_at_T1 = distance()
-	nodeFollow.set_progress((Time.get_ticks_msec() - timeStart) / 1000.0 * param_V)
-	return distance_at_T1
-
 func record_actual():
-	var actual_collision_time = (Time.get_ticks_msec() - timeStart) / 1000.0
-	$ActualValueLabel.text = str(snapped(actual_collision_time, 0.001))
+	if distance(posNew.x) < 0:
+		var actual_collision_time = (Time.get_ticks_msec() - timeStart) / 1000.0
+		$ActualValueLabel.text = str(snapped(actual_collision_time, 0.001))
 
