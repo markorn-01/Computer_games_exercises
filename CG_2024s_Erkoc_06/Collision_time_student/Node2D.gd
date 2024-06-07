@@ -27,6 +27,7 @@ func _on_Button_pressed():
 	T1 = 0
 	posNew = nodeSprite.to_global(nodeSprite.get_position())
 	posOld = posNew
+	queue_redraw()
 	$ActualValueLabel.text = "(s)"
 	$FcValueLabel.text = "(s)"
 	$BisectionValueLabel.text = "(s)"
@@ -62,8 +63,8 @@ func _process(delta):
 		record_actual()
 			
 func _draw():
-	var pos = nodeSprite.global_position
-	draw_circle(pos, 10, Color.RED)
+	if posNew:
+		draw_circle(posNew, 50, Color.RED)
 	
 func distance(x_object):
 	var x_wall_middle = nodeWall.points[0].x
