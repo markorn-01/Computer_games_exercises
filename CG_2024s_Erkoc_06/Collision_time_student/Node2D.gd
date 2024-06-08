@@ -1,3 +1,7 @@
+# Name:        Taha Beytullah Erkoc; student no.: 4740805
+# Coauthor:    Quang Minh, Ngo;      student no.: 4742554
+# faculty:     Mathematics and Computer Science
+# discipline:  Data and Computer Science
 extends Node2D
 var param_V = 200
 var param_T = 3
@@ -100,3 +104,31 @@ func record_actual():
 		var actual_collision_time = (Time.get_ticks_msec() - timeStart) / 1000.0
 		$ActualValueLabel.text = str(snapped(actual_collision_time, 0.001))
 
+# With which interval T the collision may not be detected when speed V = 2000 pixel/s?
+
+# In our case, with interval T = 0.1s, 0.4s, 0.5s, >= 0.7s, the collision is not
+# detected.
+
+# When the object may be overseen, which strategy has to be used instead?
+
+# We could adopt a sub-interval strategy where we break down the interval T
+# into smaller sub-intervals and perform collision detection at each sub-interval
+# ensuring that the object does not move beyond the width of the wall.
+
+# In the lecture you learned that we have a broad and narrow phase: Could you
+# improve the collision time estimate via bisection using these two phases? What is
+# the expected gain in performance on average?
+
+# In collision detection, the broad phase quickly eliminates pairs of objects
+# that cannot possibly collide, and the narrow phase performs precise collision
+# detection on the remaining pairs.
+# In our bisection method, we could quickly determine if there is a potential for
+# collision within the interval using a simple bounding box check.
+# If the bounding box of the object intersects with the wall's bounding box,
+# we proceed to the narrow phase, where we perform the precise collision detection
+# using the bisection method only if the broad phase indicates a potential collision.
+# 
+# By introducing these two phases, we can reduce the number of times where the bisection
+# method needs to be performed, saving computational resources.
+# The expected gain in performance will depend on how many intervals the broad phase can eliminate,
+# even though it is clear, that the performance can improve significantly.
