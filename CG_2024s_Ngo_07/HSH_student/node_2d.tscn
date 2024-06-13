@@ -291,5 +291,6 @@ offset_bottom = 360.0
 placeholder_text = "| Hash value | Cell index | Segment list |"
 editable = false
 
+[connection signal="lines_edited_from" from="Edit Segments" to="." method="_on_edit_segments_lines_edited_from"]
 [connection signal="text_submitted" from="Edit Hash Size" to="." method="_on_edit_hash_text_submitted"]
 [connection signal="text_submitted" from="Edit Point" to="." method="_on_edit_point_text_submitted"]
