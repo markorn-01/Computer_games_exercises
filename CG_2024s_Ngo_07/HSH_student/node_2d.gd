@@ -29,20 +29,62 @@ func _process(_delta):
 	pass
 
 
-func _on_edit_segments_lines_edited_from(from_line, to_line):
-	var input_text = $"Edit Segments".text
-	var line = input_text.strip_edges()
-	var segments = line.split("), ")
+func extract_coordinates(input_string):
 	var result = []
+	var regex = RegEx.new()
+	regex.compile(r"\(([0-9.]+),\s*([0-9.]+)\)")
+	var matches = regex.search_all(input_string)
 
+	for match in matches:
+		var xmin = match.get_string(1).to_float()
+		var xmax = match.get_string(2).to_float()
+		result.append(Vector2(xmin, xmax))
+	return result
+
+# Function to map coordinates to grid coordinates
+func map_to_grid_coordinates(xmin, xmax):
+	var s = xmax - xmin
+	var l = max((log(s)/log(2)), 0)
+	var k = pow(2, l)
+	var amin = floor(xmin / k)
+	var amax = floor(xmax / k)
+	return [amin, amax, l]
+
+# Function to display the grid cells
+func display_grid_segments(grid, segments):
+	for cell in grid.get_children():
+		cell.text = ""
+		
 	for segment in segments:
-		print("Segment: ", segment)
-	# Extract the coordinate part, assuming it's always after the first space
-		var name_and_coords = segment.split(", ", false, 2)
-		print(name_and_coords)
-		var coords = name_and_coords[1].replace("(", "").replace(")", "")
-		print("coords: ", coords)
-		var coord_list = coords.split(",")
-		#var coords_tuple = [float(coord_list[0]), float(coord_list[1])]
-		#result.append(coords_tuple)
-	print(result)
+		var amin = segment[0]
+		var amax = segment[1]
+		var l = segment[2]
+		for i in range(amin, amax + 1):
+			var cell_name = "Cell %d %d" % [i, l]
+			var cell = grid.get_node(cell_name)
+			if cell:
+				if cell.text != "":
+					cell.text += ", "
+				cell.text += "S %d" % segments.find(segment)
+				
+func map_segments_to_grid():
+	var input_string = $"Edit Segments".text
+	var coordinates = extract_coordinates(input_string)
+	var grid_segments = []
+
+	for coord in coordinates:
+		var xmin = coord[0]
+		var xmax = coord[1]
+		var mapped_coords = map_to_grid_coordinates(xmin, xmax)
+		var amin = mapped_coords[0]
+		var amax = mapped_coords[1]
+		var l = mapped_coords[2]
+		grid_segments.append([amin, amax, l])
+	
+	display_grid_segments($Grid, grid_segments)
+
+
+
+
+func _on_edit_segments_lines_edited_from(from_line, to_line):
+	map_segments_to_grid()
