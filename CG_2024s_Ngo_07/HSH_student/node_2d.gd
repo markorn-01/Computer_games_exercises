@@ -32,13 +32,15 @@ func _process(_delta):
 func extract_coordinates(input_string):
 	var result = []
 	var regex = RegEx.new()
-	regex.compile(r"\(([0-9.]+),\s*([0-9.]+)\)")
+	regex.compile(r"([A-Z])\s*\(([0-9.]+),\s*([0-9.]+)\)")
 	var matches = regex.search_all(input_string)
 
 	for match in matches:
-		var xmin = match.get_string(1).to_float()
-		var xmax = match.get_string(2).to_float()
-		result.append(Vector2(xmin, xmax))
+		var letter = match.get_string(1)
+		var xmin = match.get_string(2).to_float()
+		var xmax = match.get_string(3).to_float()
+		result.append([letter, xmin, xmax])
+	
 	return result
 
 # Function to map coordinates to grid coordinates
@@ -56,16 +58,17 @@ func display_grid_segments(grid, segments):
 		cell.text = ""
 		
 	for segment in segments:
-		var amin = segment[0]
-		var amax = segment[1]
-		var l = segment[2]
+		var letter = segment[0]
+		var amin = segment[1]
+		var amax = segment[2]
+		var l = segment[3]
 		for i in range(amin, amax + 1):
 			var cell_name = "Cell %d %d" % [i, l]
 			var cell = grid.get_node(cell_name)
 			if cell:
 				if cell.text != "":
 					cell.text += ", "
-				cell.text += "S %d" % segments.find(segment)
+				cell.text += letter
 				
 func map_segments_to_grid():
 	var input_string = $"Edit Segments".text
@@ -73,17 +76,16 @@ func map_segments_to_grid():
 	var grid_segments = []
 
 	for coord in coordinates:
-		var xmin = coord[0]
-		var xmax = coord[1]
+		var letter = coord[0]
+		var xmin = coord[1]
+		var xmax = coord[2]
 		var mapped_coords = map_to_grid_coordinates(xmin, xmax)
 		var amin = mapped_coords[0]
 		var amax = mapped_coords[1]
 		var l = mapped_coords[2]
-		grid_segments.append([amin, amax, l])
+		grid_segments.append([letter, amin, amax, l])
 	
 	display_grid_segments($Grid, grid_segments)
-
-
 
 
 func _on_edit_segments_lines_edited_from(from_line, to_line):
