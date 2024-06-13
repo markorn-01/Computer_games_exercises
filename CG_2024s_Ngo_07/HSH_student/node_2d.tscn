@@ -1,0 +1,295 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc3mfm6c45qdb"]
+
+[ext_resource type="Script" path="res://Grids.gd" id="1_0e0hm"]
+[ext_resource type="Script" path="res://node_2d.gd" id="1_7y8sa"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3jgij"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_blend = true
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_7y8sa")
+
+[node name="Grid" type="Panel" parent="."]
+offset_left = 50.0
+offset_right = 650.0
+offset_bottom = 240.0
+script = ExtResource("1_0e0hm")
+
+[node name="Cell 0 2" type="Label" parent="Grid"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 30.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "0, 2"
+
+[node name="Cell 1 2" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 200.0
+offset_right = 400.0
+offset_bottom = 30.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "1, 2"
+
+[node name="Cell 2 2" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 400.0
+offset_right = 600.0
+offset_bottom = 30.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "2, 2"
+
+[node name="Cell 0 1" type="Label" parent="Grid"]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 100.0
+offset_bottom = 90.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "0, 1"
+
+[node name="Cell 1 1" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 60.0
+offset_right = 200.0
+offset_bottom = 90.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "1, 1"
+
+[node name="Cell 2 1" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 60.0
+offset_right = 300.0
+offset_bottom = 90.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "2, 1"
+
+[node name="Cell 3 1" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 60.0
+offset_right = 400.0
+offset_bottom = 90.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "3, 1"
+
+[node name="Cell 4 1" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 60.0
+offset_right = 500.0
+offset_bottom = 90.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "4, 1"
+
+[node name="Cell 5 1" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 60.0
+offset_right = 600.0
+offset_bottom = 90.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "5, 1"
+
+[node name="Cell 0 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 50.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "0, 0"
+
+[node name="Cell 1 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 120.0
+offset_right = 100.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "1, 0"
+
+[node name="Cell 2 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 120.0
+offset_right = 150.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "2, 0"
+
+[node name="Cell 3 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 120.0
+offset_right = 200.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "3, 0"
+
+[node name="Cell 4 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 120.0
+offset_right = 250.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "4, 0"
+
+[node name="Cell 5 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 120.0
+offset_right = 300.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "5, 0"
+
+[node name="Cell 6 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 120.0
+offset_right = 350.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "6, 0"
+
+[node name="Cell 7 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 350.0
+offset_top = 120.0
+offset_right = 400.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "7, 0"
+
+[node name="Cell 8 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 400.0
+offset_top = 120.0
+offset_right = 450.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "8, 0"
+
+[node name="Cell 9 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 450.0
+offset_top = 120.0
+offset_right = 500.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "9, 0"
+
+[node name="Cell 10 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 120.0
+offset_right = 550.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "10, 0"
+
+[node name="Cell 11 0" type="Label" parent="Grid"]
+layout_mode = 0
+offset_left = 550.0
+offset_top = 120.0
+offset_right = 600.0
+offset_bottom = 150.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3jgij")
+text = "11, 0"
+
+[node name="Label 2" type="Label" parent="."]
+offset_right = 50.0
+offset_bottom = 30.0
+text = "l = 2"
+horizontal_alignment = 1
+
+[node name="Label 1" type="Label" parent="."]
+offset_top = 60.0
+offset_right = 50.0
+offset_bottom = 90.0
+text = "l = 1"
+horizontal_alignment = 1
+
+[node name="Label 0" type="Label" parent="."]
+offset_top = 120.0
+offset_right = 50.0
+offset_bottom = 150.0
+text = "l = 0"
+horizontal_alignment = 1
+
+[node name="Label Segments" type="Label" parent="."]
+offset_top = 240.0
+offset_right = 116.0
+offset_bottom = 266.0
+text = "Line segments:"
+
+[node name="Edit Segments" type="TextEdit" parent="."]
+offset_top = 270.0
+offset_right = 650.0
+offset_bottom = 360.0
+text = "A (0.5, 3.6), B (6.8, 7.2), C(7.5, 9.2)"
+
+[node name="Label Hash Size" type="Label" parent="."]
+offset_left = 680.0
+offset_right = 822.0
+offset_bottom = 26.0
+text = "Hash table size:"
+
+[node name="Edit Hash Size" type="LineEdit" parent="."]
+offset_left = 850.0
+offset_right = 900.0
+offset_bottom = 30.0
+text = "5"
+
+[node name="Label Point" type="Label" parent="."]
+offset_left = 680.0
+offset_top = 30.0
+offset_right = 822.0
+offset_bottom = 56.0
+text = "Test against point:"
+
+[node name="Edit Point" type="LineEdit" parent="."]
+offset_left = 850.0
+offset_top = 30.0
+offset_right = 917.063
+offset_bottom = 61.0
+text = "8.7"
+
+[node name="Label Hash Result" type="Label" parent="."]
+offset_left = 680.0
+offset_top = 60.0
+offset_right = 822.0
+offset_bottom = 86.0
+text = "Hash table:"
+
+[node name="Edit Hash Result" type="TextEdit" parent="."]
+offset_left = 680.0
+offset_top = 90.0
+offset_right = 1100.0
+offset_bottom = 270.0
+placeholder_text = "| Hash value | Cell index | Segment list |"
+editable = false
+
+[node name="Label Intersection Result" type="Label" parent="."]
+offset_left = 680.0
+offset_top = 270.0
+offset_right = 858.0
+offset_bottom = 296.0
+text = "Potential point-segment collisions:"
+
+[node name="Edit Intersection Result" type="TextEdit" parent="."]
+offset_left = 680.0
+offset_top = 300.0
+offset_right = 1100.0
+offset_bottom = 360.0
+placeholder_text = "| Hash value | Cell index | Segment list |"
+editable = false
+
+[connection signal="text_submitted" from="Edit Hash Size" to="." method="_on_edit_hash_text_submitted"]
+[connection signal="text_submitted" from="Edit Point" to="." method="_on_edit_point_text_submitted"]
