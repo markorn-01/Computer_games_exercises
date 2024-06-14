@@ -11,29 +11,46 @@ extends Node2D
 #\textit{IEEE International Conference on Shape Modeling and Applications 2007 (SMI '07)}, 
 #Minneapolis, MN, USA, 2007, pp. 61-70, doi: 10.1109/SMI.2007.18.
 
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	map_segments_to_grid()
+	update_hash_table()
+	update_intersection_test()
+
+# Update hash table whenever table size is changed	
 func _on_edit_hash_text_submitted(_new_text):
-	var input_string = $"Edit Segments".text
+	update_hash_table()
+	
+# Update potential point segment collisions whenever point is edited
+func _on_edit_point_text_submitted(_new_text):
+	$"Edit Point".text = str(abs(float($"Edit Point".text)))
+	update_intersection_test()
+
+# Update Segment mapping whenever segments are edited
+func _on_edit_segments_lines_edited_from(from_line, to_line):
+	map_segments_to_grid()
+	update_hash_table()
+	update_intersection_test()
+
+
+# Update the hash table display
+func update_hash_table():
 	var hash_size = int($"Edit Hash Size".text)
 	var grid_segments = map_segments_to_grid()
 	var hash_table = put_segments_in_hash_table(grid_segments, hash_size)
 	display_hash_table(hash_table)
-	
 
+# Update the intersection test result
+func update_intersection_test():
+	var point_pos = float($"Edit Point".text)
+	var hash_size = int($"Edit Hash Size".text)
+	var grid_segments = map_segments_to_grid()
+	var hash_table = put_segments_in_hash_table(grid_segments, hash_size)
+	var intersection_result = detect_intersections(point_pos, hash_table)
+	$"Edit Intersection Result".text = intersection_result
 
-func _on_edit_point_text_submitted(_new_text):
-	$"Edit Point".text = str(abs(float($"Edit Point".text)))
-	
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
-
-# Function to extract the coordinates of the Line segments.
+# Function to extract the coordinates of the line segments.
 # We use regular expressions, as its very difficult to
 # extract the coordinates given the format of our input
 func extract_coordinates(input_string):
@@ -109,7 +126,8 @@ func display_grid_segments(grid, segments):
 				if cell.text != "":
 					cell.text += ", "
 				cell.text += letter
-				
+
+# Function to map the segments to the grid
 func map_segments_to_grid():
 	var input_string = $"Edit Segments".text
 	var coordinates = extract_coordinates(input_string)
@@ -130,5 +148,23 @@ func map_segments_to_grid():
 	return grid_segments
 
 
-func _on_edit_segments_lines_edited_from(from_line, to_line):
-	map_segments_to_grid()
+# Detect intersections
+# We again use regex to extract the amin and amix values from the segment string
+# We check if point_pos lies within segment range and add it to segments_in_cell
+# if it does
+func detect_intersections(point_pos, hash_table):
+	var result_text = ""
+	for key in hash_table.keys():
+		var segments_in_cell = []
+		for segment in hash_table[key]:
+			var regex = RegEx.new()
+			regex.compile(r"\(([0-9]+), ([0-9]+)\)")
+			var match = regex.search(segment)
+			if match:
+				var amin = int(match.get_string(1))
+				var amax = int(match.get_string(2))
+				if amin <= point_pos and point_pos <= amax:
+					segments_in_cell.append(segment)
+		if segments_in_cell.size() > 0:
+			result_text += "| Hash value: %d | Cell index: %d | Segment list: %s |\n" % [key, key, str(segments_in_cell)]
+	return result_text.strip_edges()
