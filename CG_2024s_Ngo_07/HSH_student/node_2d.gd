@@ -61,8 +61,8 @@ func extract_coordinates(input_string):
 
 	for match in matches:
 		var letter = match.get_string(1)
-		var xmin = match.get_string(2).to_float()
-		var xmax = match.get_string(3).to_float()
+		var xmin = float(match.get_string(2))
+		var xmax = float(match.get_string(3))
 		result.append([letter, xmin, xmax])
 	
 	return result
@@ -94,8 +94,12 @@ func display_hash_table(hash_table):
 	var result = ""
 	for key in hash_table.keys():
 		result += "Hash %d: " % key
-		for entry in hash_table[key]:
-			result += "%s, " % entry
+		var hash = hash_table[key]
+		var count = len(hash)
+		for i in range(count):
+			result += "%s" % hash[i]
+			if i < count - 1:
+				result += ", "
 		result += "\n"
 	$"Edit Hash Result".text = result.strip_edges()
 	
@@ -103,7 +107,7 @@ func display_hash_table(hash_table):
 # Function to map coordinates to grid coordinates
 func map_to_grid_coordinates(xmin, xmax):
 	var s = xmax - xmin
-	var l = max((log(s)/log(2)), 0)
+	var l = ceil(max((log(s)/log(2)), 0))
 	var k = pow(2, l)
 	var amin = floor(xmin / k)
 	var amax = floor(xmax / k)
@@ -161,10 +165,22 @@ func detect_intersections(point_pos, hash_table):
 			regex.compile(r"\(([0-9]+), ([0-9]+)\)")
 			var match = regex.search(segment)
 			if match:
-				var amin = int(match.get_string(1))
-				var amax = int(match.get_string(2))
-				if amin <= point_pos and point_pos <= amax:
+				var i = int(match.get_string(1))
+				var l = int(match.get_string(2))
+				var k = pow(2, l)
+				var p = floor(point_pos / k)
+				if i == p:
 					segments_in_cell.append(segment)
 		if segments_in_cell.size() > 0:
 			result_text += "| Hash value: %d | Cell index: %d | Segment list: %s |\n" % [key, key, str(segments_in_cell)]
 	return result_text.strip_edges()
+
+# Which criteria are used to select in the hash function in the paper?
+# The paper selects the hash function by balancing speed, efficiency, and practical performance 
+# in managing hash collisions specific to spatial hashing. 
+# The criteria include:
+# + Execution speed for rapid collision detection.
+# + Effectiveness in handling hash collisions, mainly due to non-unique input keys.
+# + Empirical performance based on sample sets.
+# + Fewer instructions to ensure computational efficiency.
+

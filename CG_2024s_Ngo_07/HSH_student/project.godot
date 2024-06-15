@@ -20,3 +20,7 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1200
 window/size/viewport_height=400
 window/size/resizable=false
+
+[dotnet]
+
+project/assembly_name="Hierarchical Spatial Hashing"
