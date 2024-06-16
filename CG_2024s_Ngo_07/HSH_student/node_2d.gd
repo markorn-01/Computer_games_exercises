@@ -36,6 +36,7 @@ func _on_edit_segments_lines_edited_from(from_line, to_line):
 
 # Update the hash table display
 func update_hash_table():
+	print("-------------------")
 	var hash_size = int($"Edit Hash Size".text)
 	var grid_segments = map_segments_to_grid()
 	var hash_table = put_segments_in_hash_table(grid_segments, hash_size)
@@ -71,7 +72,9 @@ func extract_coordinates(input_string):
 func djb2_hash(a, l, m):
 	var hash = 5381
 	hash = int(((hash << 5) + hash) + a)
+	print(hash)
 	hash = int(((hash << 5) + hash) + l)
+	print(hash)
 	return hash % m
 
 # Function to put line segments into the hash table
@@ -84,6 +87,7 @@ func put_segments_in_hash_table(segments, hash_size):
 		var l = segment[3]
 		for i in range(amin, amax + 1):
 			var hash_value = djb2_hash(i, l, hash_size)
+			print(letter, " ", i, " ", l, " ", amin, " ", amax, " ", hash_value)
 			if not hash_table.has(hash_value):
 				hash_table[hash_value] = []
 			hash_table[hash_value].append("%s (%d, %d)" % [letter, i, l])
@@ -177,7 +181,7 @@ func detect_intersections(point_pos, hash_table):
 			result_text += "| Hash value: %d | Cell index: %d | Segment list: %s |\n" % [key, key, str(segments_in_cell)]
 	return result_text.strip_edges()
 
-# Which criteria are used to select in the hash function in the paper?
+# 1. Which criteria are used to select in the hash function in the paper?
 # The paper selects the hash function by balancing speed, efficiency, and practical performance 
 # in managing hash collisions specific to spatial hashing. 
 # The criteria include:
@@ -185,4 +189,28 @@ func detect_intersections(point_pos, hash_table):
 # + Effectiveness in handling hash collisions, mainly due to non-unique input keys.
 # + Empirical performance based on sample sets.
 # + Fewer instructions to ensure computational efficiency.
+
+# 2. What’s the behavior of the method with different hash table size, e.g. 3, 6, 12?
+# A (0.5, 3.6), B (6.8, 7.2), C(7.5, 9.2), D(8, 11), E(4, 6)
+
+# Hash Table Size 3:
+# High collision rate due to small table size.
+# Most hash values have multiple segments, making collision detection less efficient.
+
+# Hash Table Size 6:
+# Moderate collision rate.
+# More even distribution of segments across hash values.
+# Better performance in collision detection compared to size 3.
+
+# Hash Table Size 12:
+# Low collision rate.
+# Segments are more evenly distributed.
+# Fewer collisions, which improves the efficiency of collision detection.
+
+# Conclusion:
+# As the hash table size increases, the distribution of segments becomes more even, 
+# resulting in fewer collisions and more efficient collision detection.
+# Smaller hash table sizes lead to higher collision rates, making the method less efficient.
+# Optimal hash table size depends on the number of segments and the desired efficiency. 
+# In this case, a size of 12 provides the best distribution and efficiency.
 
