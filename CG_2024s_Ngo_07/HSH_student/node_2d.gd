@@ -70,9 +70,9 @@ func extract_coordinates(input_string):
 # DJB2 hash function for 1D case
 func djb2_hash(a, l, m):
 	var hash = 5381
-	hash = ((hash << 5) + hash) + a
-	hash = ((hash << 5) + hash) + l
-	return fmod(hash, m)
+	hash = int(((hash << 5) + hash) + a)
+	hash = int(((hash << 5) + hash) + l)
+	return hash % m
 
 # Function to put line segments into the hash table
 func put_segments_in_hash_table(segments, hash_size):
