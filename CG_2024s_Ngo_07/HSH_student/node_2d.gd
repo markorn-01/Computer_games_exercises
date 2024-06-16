@@ -36,7 +36,6 @@ func _on_edit_segments_lines_edited_from(from_line, to_line):
 
 # Update the hash table display
 func update_hash_table():
-	print("-------------------")
 	var hash_size = int($"Edit Hash Size".text)
 	var grid_segments = map_segments_to_grid()
 	var hash_table = put_segments_in_hash_table(grid_segments, hash_size)
@@ -72,9 +71,7 @@ func extract_coordinates(input_string):
 func djb2_hash(a, l, m):
 	var hash = 5381
 	hash = int(((hash << 5) + hash) + a)
-	print(hash)
 	hash = int(((hash << 5) + hash) + l)
-	print(hash)
 	return hash % m
 
 # Function to put line segments into the hash table
@@ -87,7 +84,6 @@ func put_segments_in_hash_table(segments, hash_size):
 		var l = segment[3]
 		for i in range(amin, amax + 1):
 			var hash_value = djb2_hash(i, l, hash_size)
-			print(letter, " ", i, " ", l, " ", amin, " ", amax, " ", hash_value)
 			if not hash_table.has(hash_value):
 				hash_table[hash_value] = []
 			hash_table[hash_value].append("%s (%d, %d)" % [letter, i, l])
