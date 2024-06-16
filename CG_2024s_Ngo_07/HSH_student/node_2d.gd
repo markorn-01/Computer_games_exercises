@@ -93,14 +93,16 @@ func put_segments_in_hash_table(segments, hash_size):
 func display_hash_table(hash_table):
 	var result = ""
 	for key in hash_table.keys():
-		result += "Hash %d: " % key
-		var hash = hash_table[key]
-		var count = len(hash)
-		for i in range(count):
-			result += "%s" % hash[i]
-			if i < count - 1:
-				result += ", "
-		result += "\n"
+		for entry in hash_table[key]:
+			# Extracting amin, amax, and l from the entry string
+			var regex = RegEx.new()
+			regex.compile(r"([A-Z]) \(([0-9]+), ([0-9]+)\)")
+			var match = regex.search(entry)
+			if match:
+				var letter = match.get_string(1)
+				var amin = int(match.get_string(2))
+				var amax = int(match.get_string(3))
+				result += "| Hash value: %d | Cell index: (%d, %d) | Segment list: %s |\n" % [key, amin, amax, letter]
 	$"Edit Hash Result".text = result.strip_edges()
 	
 
