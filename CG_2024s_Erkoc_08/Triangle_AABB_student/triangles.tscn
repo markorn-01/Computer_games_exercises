@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://sigvyqnsh4nr"]
+[gd_scene load_steps=20 format=3 uid="uid://sigvyqnsh4nr"]
 
 [ext_resource type="Script" path="res://scene.gd" id="1_rjxvk"]
 [ext_resource type="Script" path="res://triangle.gd" id="2_dkolv"]
+[ext_resource type="ButtonGroup" uid="uid://dkcytmkldv2nm" path="res://Button_group.tres" id="3_c2l5e"]
 
 [sub_resource type="Theme" id="10"]
 
@@ -116,6 +117,7 @@ theme_override_styles/normal = SubResource("13")
 theme_override_styles/hover = SubResource("11")
 theme_override_styles/pressed = SubResource("12")
 toggle_mode = true
+button_group = ExtResource("3_c2l5e")
 
 [node name="ButtonOrange" type="Button" parent="."]
 offset_top = 90.0
@@ -125,6 +127,7 @@ theme_override_styles/normal = SubResource("3")
 theme_override_styles/hover = SubResource("1")
 theme_override_styles/pressed = SubResource("2")
 toggle_mode = true
+button_group = ExtResource("3_c2l5e")
 
 [node name="ButtonPink" type="Button" parent="."]
 offset_top = 150.0
@@ -134,6 +137,7 @@ theme_override_styles/normal = SubResource("16")
 theme_override_styles/hover = SubResource("14")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_7bntt")
 toggle_mode = true
+button_group = ExtResource("3_c2l5e")
 
 [node name="ButtonBlue" type="Button" parent="."]
 offset_top = 210.0
@@ -143,6 +147,7 @@ theme_override_styles/normal = SubResource("9")
 theme_override_styles/hover = SubResource("7")
 theme_override_styles/pressed = SubResource("8")
 toggle_mode = true
+button_group = ExtResource("3_c2l5e")
 
 [node name="ButtonRed" type="Button" parent="."]
 offset_top = 270.0
@@ -152,6 +157,7 @@ theme_override_styles/normal = SubResource("6")
 theme_override_styles/hover = SubResource("4")
 theme_override_styles/pressed = SubResource("5")
 toggle_mode = true
+button_group = ExtResource("3_c2l5e")
 
 [node name="ButtonReset" type="Button" parent="."]
 offset_left = 839.0
@@ -160,4 +166,9 @@ offset_right = 940.0
 offset_bottom = 55.0
 text = "Restart"
 
+[connection signal="pressed" from="ButtonYellow" to="." method="_on_Button_Color_pressed" binds= [&"Yellow"]]
+[connection signal="pressed" from="ButtonOrange" to="." method="_on_Button_Color_pressed" binds= [&"Orange"]]
+[connection signal="pressed" from="ButtonPink" to="." method="_on_Button_Color_pressed" binds= [&"Pink"]]
+[connection signal="pressed" from="ButtonBlue" to="." method="_on_Button_Color_pressed" binds= [&"Blue"]]
+[connection signal="pressed" from="ButtonRed" to="." method="_on_Button_Color_pressed" binds= [&"Red"]]
 [connection signal="pressed" from="ButtonReset" to="." method="_on_Button_pressed"]

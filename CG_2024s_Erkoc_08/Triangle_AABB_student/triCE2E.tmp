@@ -1,0 +1,168 @@
+[gd_scene load_steps=19 format=3 uid="uid://sigvyqnsh4nr"]
+
+[ext_resource type="Script" path="res://scene.gd" id="1_rjxvk"]
+[ext_resource type="Script" path="res://triangle.gd" id="2_dkolv"]
+
+[sub_resource type="Theme" id="10"]
+
+[sub_resource type="StyleBoxFlat" id="13"]
+bg_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="11"]
+bg_color = Color(1, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="12"]
+bg_color = Color(1, 1, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.960784, 0.576471, 0.0313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.960784, 0.576471, 0.0313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="2"]
+bg_color = Color(0.960784, 0.576471, 0.0313726, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="16"]
+bg_color = Color(0.890196, 0.109804, 0.843137, 1)
+
+[sub_resource type="StyleBoxFlat" id="14"]
+bg_color = Color(0.890196, 0.109804, 0.843137, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7bntt"]
+bg_color = Color(0.890196, 0.109804, 0.843137, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="9"]
+bg_color = Color(0.172549, 0.0705882, 0.878431, 1)
+
+[sub_resource type="StyleBoxFlat" id="7"]
+bg_color = Color(0.172549, 0.0705882, 0.878431, 1)
+
+[sub_resource type="StyleBoxFlat" id="8"]
+bg_color = Color(0.172549, 0.0705882, 0.878431, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[sub_resource type="StyleBoxFlat" id="6"]
+bg_color = Color(1, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="4"]
+bg_color = Color(1, 0.00392157, 0.00392157, 1)
+
+[sub_resource type="StyleBoxFlat" id="5"]
+bg_color = Color(1, 0.00392157, 0.00392157, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_rjxvk")
+
+[node name="Yellow" type="Polygon2D" parent="."]
+position = Vector2(42.0086, 55.8768)
+color = Color(0.956863, 0.941176, 0.0196078, 1)
+polygon = PackedVector2Array(595.367, 283.012, 492.919, -15.0069, 604.604, 19.4861)
+script = ExtResource("2_dkolv")
+
+[node name="Orange" type="Polygon2D" parent="."]
+position = Vector2(131.627, -86.6929)
+color = Color(0.960784, 0.576471, 0.0313726, 1)
+polygon = PackedVector2Array(67, 91, 62, 218, 237.956, 213)
+script = ExtResource("2_dkolv")
+Outline = Color(0.960784, 0.576471, 0.0313726, 1)
+
+[node name="Pink" type="Polygon2D" parent="."]
+position = Vector2(295.429, 21.4892)
+color = Color(0.890196, 0.109804, 0.843137, 1)
+polygon = PackedVector2Array(610.428, 190.762, 330, 482, 792, 465)
+script = ExtResource("2_dkolv")
+Outline = Color(0.890196, 0.109804, 0.843137, 1)
+
+[node name="Blue" type="Polygon2D" parent="."]
+position = Vector2(238.706, -218.021)
+color = Color(0.172549, 0.0705882, 0.878431, 1)
+polygon = PackedVector2Array(372.072, 285.586, 640, 412, 185, 454)
+script = ExtResource("2_dkolv")
+Outline = Color(0.172549, 0.0705882, 0.878431, 1)
+
+[node name="Red" type="Polygon2D" parent="."]
+position = Vector2(443.262, 289.941)
+color = Color(1, 0.00392157, 0.00392157, 1)
+polygon = PackedVector2Array(-327, -184, 299.851, -230.316, -247.477, -33.2839)
+script = ExtResource("2_dkolv")
+Outline = Color(1, 0.00392157, 0.00392157, 1)
+
+[node name="ButtonYellow" type="Button" parent="."]
+offset_top = 30.0
+offset_right = 80.0
+offset_bottom = 80.0
+theme = SubResource("10")
+theme_override_styles/normal = SubResource("13")
+theme_override_styles/hover = SubResource("11")
+theme_override_styles/pressed = SubResource("12")
+toggle_mode = true
+
+[node name="ButtonOrange" type="Button" parent="."]
+offset_top = 90.0
+offset_right = 80.0
+offset_bottom = 140.0
+theme_override_styles/normal = SubResource("3")
+theme_override_styles/hover = SubResource("1")
+theme_override_styles/pressed = SubResource("2")
+toggle_mode = true
+
+[node name="ButtonPink" type="Button" parent="."]
+offset_top = 150.0
+offset_right = 80.0
+offset_bottom = 200.0
+theme_override_styles/normal = SubResource("16")
+theme_override_styles/hover = SubResource("14")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7bntt")
+toggle_mode = true
+
+[node name="ButtonBlue" type="Button" parent="."]
+offset_top = 210.0
+offset_right = 80.0
+offset_bottom = 260.0
+theme_override_styles/normal = SubResource("9")
+theme_override_styles/hover = SubResource("7")
+theme_override_styles/pressed = SubResource("8")
+toggle_mode = true
+
+[node name="ButtonRed" type="Button" parent="."]
+offset_top = 270.0
+offset_right = 80.0
+offset_bottom = 320.0
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("4")
+theme_override_styles/pressed = SubResource("5")
+toggle_mode = true
+
+[node name="ButtonReset" type="Button" parent="."]
+offset_left = 839.0
+offset_top = 19.0
+offset_right = 940.0
+offset_bottom = 55.0
+text = "Restart"
+
+[connection signal="pressed" from="ButtonYellow" to="." method="_on_Button_Color_pressed" binds= [&"Yellow"]]
+[connection signal="pressed" from="ButtonOrange" to="." method="_on_Button_Color_pressed" binds= [&"Orange"]]
+[connection signal="pressed" from="ButtonPink" to="." method="_on_Button_Color_pressed" binds= [&"Pink"]]
+[connection signal="pressed" from="ButtonBlue" to="." method="_on_Button_Color_pressed" binds= [&"Blue"]]
+[connection signal="pressed" from="ButtonRed" to="." method="_on_Button_Color_pressed" binds= [&"Red"]]
+[connection signal="pressed" from="ButtonReset" to="." method="_on_Button_pressed"]

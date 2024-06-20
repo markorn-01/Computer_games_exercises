@@ -1,7 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1718874962
-default_env.tres::Environment::4784329766239964588::1718874936::0::1::::<><>::
-icon.png::CompressedTexture2D::9132045173769612992::1713296076::1718872624::1::::<><>::
-scene.gd::GDScript::-1::1718874925::0::1::::<>Node2D<>::
-triangle.gd::GDScript::-1::1713296076::0::1::::<>Polygon2D<>::
-triangles.tscn::PackedScene::1280317297037960503::1718874936::0::1::::<><>::res://scene.gd<>res://triangle.gd
+::res://::1718891336
+default_env.tres::Environment::4784329766239964588::1718891277::0::1::::<><>::
+icon.png::CompressedTexture2D::9132045173769612992::1718886607::1718886607::1::::<><>::
+scene.gd::GDScript::-1::1718891280::0::1::::<>Node2D<>::
+triangle.gd::GDScript::-1::1718886607::0::1::::<>Polygon2D<>::
+triangles.tscn::PackedScene::1280317297037960503::1718891277::0::1::::<><>::res://scene.gd<>res://triangle.gd
