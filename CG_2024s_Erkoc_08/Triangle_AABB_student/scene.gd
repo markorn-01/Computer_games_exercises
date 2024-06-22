@@ -1,3 +1,8 @@
+# Name:        Taha Beytullah Erkoc; student no.: 4740805
+# Coauthor:    Quang Minh, Ngo;      student no.: 4742554
+# faculty:     Mathematics and Computer Science
+# discipline:  Data and Computer Science
+
 extends Node2D
 
 var runSpeed = 500
@@ -60,7 +65,6 @@ func _on_Button_pressed():
 	blue.color = Color(1, 1, 1, 0)
 	pink.color = Color(1, 1, 1, 0)
 	queue_redraw()
-	test_all_triangle_intersections()
 	$ButtonYellow.set_pressed(false)
 	$ButtonOrange.set_pressed(false)
 	$ButtonPink.set_pressed(false)
@@ -69,7 +73,7 @@ func _on_Button_pressed():
 
 #------------------------------------------------------------------------------------------------
 # Get 4 corners of the bounding box
-func _get_points_aabb(triangle):
+func get_points_aabb(triangle):
 	var x_min = max_val
 	var x_max = min_val
 	var y_min = max_val
@@ -107,7 +111,7 @@ func _draw_dashed_line(from: Vector2, to: Vector2, color: Color, dash_length: fl
 func _draw():
 	var triangles = [yellow, orange, red, blue, pink]
 	for triangle in triangles:
-		var points = _get_points_aabb(triangle)
+		var points = get_points_aabb(triangle)
 		var color = Color(1, 1, 1) # White color
 		# Draw dashed lines connecting the points
 		for i in range(points.size()):
@@ -116,7 +120,7 @@ func _draw():
 
 #------------------------------------------------------------------------------------------------
 # Dimension Reduction Collision
-func _drc_broad_phase(target):
+func drc_broad_phase(target):
 	var triangles = [yellow, orange, red, blue, pink]
 	var aabbs = []	
 	for i in triangles.size():
@@ -125,25 +129,30 @@ func _drc_broad_phase(target):
 			break
 	
 	for triangle in triangles:
-		var box = _get_points_aabb(triangle)
+		var box = get_points_aabb(triangle)
 		aabbs.append([box[1], box[3]])
 		
-	var target_box = _get_points_aabb(target)
+	var target_box = get_points_aabb(target)
 	var target_aabb = [target_box[1], target_box[3]]
 	
 	
 	var collisions = []
 	for i in range(aabbs.size()):
-		if intersects(target_aabb, aabbs[i]):
+		if interval_intersect(target_aabb, aabbs[i]):
 			collisions.append(triangles[i])
 	
 	if collisions.size() > 0:
 		for collision in collisions:
 			collision.color = Color.BLACK
+		var narrow_phase = triangles_intersect(target)
+		if narrow_phase.size() > 0:
+			for narrow in narrow_phase:
+				narrow.color = Color.WHITE
+		
 	
 	
-func intersects(aabb1, aabb2) -> bool:
-	for axis in range(2): # Assuming 2D, adjust for 3D if needed
+func interval_intersect(aabb1, aabb2) -> bool:
+	for axis in range(2):
 		var this_interval_min = aabb1[0][axis]
 		var this_interval_max = aabb1[1][axis]
 		var other_interval_min = aabb2[0][axis]
@@ -167,75 +176,87 @@ func _on_Button_Color_pressed(color):
 	red.color = Color(1, 1, 1, 0)
 	blue.color = Color(1, 1, 1, 0)
 	pink.color = Color(1, 1, 1, 0)
-	_drc_broad_phase(dic[color])
+	drc_broad_phase(dic[color])
 #------------------------------------------------------------------------------------------------
 # Triangle-Triangle Test
 # Function to calculate the normal of a 3D triangle
 # In 2D context, this function may return a scalar representing the 2D cross product (area of the parallelogram)
-func calculate_triangle_normal(v1: Vector2, v2: Vector2, v3: Vector2) -> float:
-	var vector1 = v2 - v1
-	var vector2 = v3 - v1
-	return vector1.cross(vector2)  # This is the 2D "normal"
+# Function to determine the orientation of three points
+func point_orientation(p, q, r):
+	var val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y)
+	if val == 0:
+		return 0
+	return 1 if val > 0 else -1
 
-# Function to calculate the intersection line between two triangles
-func calculate_intersection_line(triangle1: PackedVector2Array, triangle2: PackedVector2Array) -> Array:
-	var normal1 = calculate_triangle_normal(triangle1[0], triangle1[1], triangle1[2])
-	var normal2 = calculate_triangle_normal(triangle2[0], triangle2[1], triangle2[2])
+# Function to check if two segments intersect
+func segment_intersect(p1, q1, p2, q2):
+	var o1 = point_orientation(p1, q1, p2)
+	var o2 = point_orientation(p1, q1, q2)
+	var o3 = point_orientation(p2, q2, p1)
+	var o4 = point_orientation(p2, q2, q1)
+	return o1 != o2 and o3 != o4
 
-	if normal1 == 0 or normal2 == 0:
-		# If either normal is zero, the triangles are degenerate (collinear points)
-		return []
+func triangle_sign(p1, p2, p3):
+	return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y)
+# Function to check if a point is inside a triangle
+func is_point_in_triangle(pt, v1, v2, v3):	
+	var d1 = triangle_sign(pt, v1, v2)
+	var d2 = triangle_sign(pt, v2, v3)
+	var d3 = triangle_sign(pt, v3, v1)
+	var has_neg = (d1 < 0) or (d2 < 0) or (d3 < 0)
+	var has_pos = (d1 > 0) or (d2 > 0) or (d3 > 0)
+	return not (has_neg and has_pos)
+
+# Function to check if two triangles intersect
+func triangles_intersect(target):
+	var target_global_position = target.global_position
+	var triangles = [yellow, orange, red, blue, pink]
+	var collisions = []
+	for i in triangles.size():
+		if triangles[i] == target:
+			triangles.remove_at(i)
+			break
+	var A1 = target.polygon[0] + target_global_position
+	var B1 = target.polygon[1] + target_global_position
+	var C1 = target.polygon[2] + target_global_position
+	for triangle in triangles:
+		var triangle_global_position = triangle.global_position
+		var A2 = triangle.polygon[0] + triangle_global_position
+		var B2 = triangle.polygon[1] + triangle_global_position
+		var C2 = triangle.polygon[2] + triangle_global_position
+		# Check if any edge of triangle 1 intersects with any edge of triangle 2
+		if (segment_intersect(A1, B1, A2, B2) or segment_intersect(A1, B1, B2, C2) or segment_intersect(A1, B1, C2, A2) or
+			segment_intersect(B1, C1, A2, B2) or segment_intersect(B1, C1, B2, C2) or segment_intersect(B1, C1, C2, A2) or
+			segment_intersect(C1, A1, A2, B2) or segment_intersect(C1, A1, B2, C2) or segment_intersect(C1, A1, C2, A2)):
+				collisions.append(triangle)
+				continue
+		
+		# Check if any vertex of one triangle is inside the other triangle
+		if (is_point_in_triangle(A1, A2, B2, C2) or is_point_in_triangle(B1, A2, B2, C2) or is_point_in_triangle(C1, A2, B2, C2) or
+			is_point_in_triangle(A2, A1, B1, C1) or is_point_in_triangle(B2, A1, B1, C1) or is_point_in_triangle(C2, A1, B1, C1)):
+				collisions.append(triangle)
 	
-	var direction = Vector2(-normal2, normal1).normalized()  # Use the 2D perpendicular vector as the direction
-	var point_on_line = triangle1[0]  # Choose a point on the line (e.g., vertex of triangle1)
-	
-	# Return a line segment (or ray) representing the intersection line
-	return [point_on_line, point_on_line + direction * 1000]  # Adjust length as needed
+	return collisions
 
-# Function to project a point onto a line defined by a point and direction
-func project_point_on_line(point: Vector2, point_on_line: Vector2, direction: Vector2) -> float:
-	return (point - point_on_line).dot(direction)
 
-# Function to project a triangle onto a line defined by a point and direction
-func project_triangle_on_line(triangle: PackedVector2Array, point_on_line: Vector2, direction: Vector2) -> Vector2:
-	var min_interval = project_point_on_line(triangle[0], point_on_line, direction)
-	var max_interval = min_interval
-	for i in range(1, triangle.size()):
-		var projection = project_point_on_line(triangle[i], point_on_line, direction)
-		min_interval = min(min_interval, projection)
-		max_interval = max(max_interval, projection)
-	return Vector2(min_interval, max_interval)
 
-# Function to check if two intervals overlap
-func intervals_overlap(interval1: Vector2, interval2: Vector2) -> bool:
-	return interval1.y >= interval2.x and interval2.y >= interval1.x
+# The complete collision detection pipeline
+# Broad phase:
+# 1. In the broad phase, we create the AABBs for each triangle based on the max and
+#    min of their x and y coordinates. That means, we get four corners of the AABBs, which are
+#    top left (xmin, ymax), bottom left (xmin, ymin), bottom right (xmax, ymin),
+#    top right (xmax, ymax).
+#
+# 2. Next, we implement the interval intersections for the x and y dimensions. We check
+#    whether there is a collision in both dimensions. If there is, that means a collision
+#    is detected.
+#
+# Narrow phase:
+# In the narrow phase, there are two subcases, which are the segment intersection and is_point_in_triangle.
+# 1. Edge-Edge Intersection Test: For each edge of the first triangle, check if it intersects with any edge
+#    of the second triangle. If it does, it means, there's a collision.
+#
+# 2. Point inside Triangle Test: If no intersections are found in the previous step, we 
+#    check if any points of one triangle are inside the other triangle. If so, it means
+#    we have a collision.
 
-# Function to perform triangle-triangle intersection test
-func triangle_triangle_intersect(triangle1: PackedVector2Array, triangle2: PackedVector2Array) -> bool:
-	# Step 1: Calculate the intersection line
-	var intersection_line = calculate_intersection_line(triangle1, triangle2)
-	
-	if intersection_line.size() == 0:
-		# No valid intersection line
-		return false
-	
-	var point_on_line = intersection_line[0]
-	var direction = (intersection_line[1] - intersection_line[0]).normalized()
-	
-	# Step 2: Project both triangles onto the intersection line
-	var interval1 = project_triangle_on_line(triangle1, point_on_line, direction)
-	var interval2 = project_triangle_on_line(triangle2, point_on_line, direction)
-	
-	# Step 3: Check if intervals overlap
-	return intervals_overlap(interval1, interval2)
-
-# Function to perform the test for all pairs of triangles
-func test_all_triangle_intersections() -> bool:
-	var triangles = [yellow, orange]
-	for i in range(triangles.size() - 1):
-		for j in range(i + 1, triangles.size()):
-			var triangle1 = triangles[i].polygon
-			var triangle2 = triangles[j].polygon
-			if triangle_triangle_intersect(triangle1, triangle2):
-				return true
-	return false
