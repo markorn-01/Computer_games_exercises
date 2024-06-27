@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6f66e2mv8yqc"]
+
+[ext_resource type="Texture2D" uid="uid://ywuefhubfhnf" path="res://textures/sphere.png" id="1_ka88y"]
+[ext_resource type="Texture2D" uid="uid://c21k2kbcgafoi" path="res://textures/ball.png" id="2_fyoau"]
+[ext_resource type="Script" path="res://ball.gd" id="3_gs7ul"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="sphere1" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, 250)
+texture = ExtResource("1_ka88y")
+
+[node name="sphere2" type="Sprite2D" parent="."]
+position = Vector2(100, 250)
+texture = ExtResource("1_ka88y")
+
+[node name="sphere3" type="Sprite2D" parent="."]
+position = Vector2(250, 500)
+texture = ExtResource("1_ka88y")
+
+[node name="sphere4" type="Sprite2D" parent="."]
+position = Vector2(400, 325)
+texture = ExtResource("1_ka88y")
+
+[node name="sphere5" type="Sprite2D" parent="."]
+position = Vector2(550, 100)
+texture = ExtResource("1_ka88y")
+
+[node name="ball" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, 250)
+texture = ExtResource("2_fyoau")
+script = ExtResource("3_gs7ul")
+
+[node name="panel11" type="Panel" parent="."]
+offset_right = 600.0
+offset_bottom = 600.0
+
+[node name="panel12" type="Panel" parent="."]
+offset_top = 600.0
+offset_right = 600.0
+offset_bottom = 700.0
+
+[node name="HSlider" type="HSlider" parent="panel12"]
+modulate = Color(1, 1, 0.223529, 1)
+self_modulate = Color(1, 0.286275, 0.14902, 1)
+layout_mode = 0
+offset_left = 400.0
+offset_right = 529.0
+offset_bottom = 16.0
+max_value = 50.0
+
+[node name="OptionButton" type="OptionButton" parent="panel12"]
+layout_mode = 0
+offset_right = 45.0
+offset_bottom = 20.0
+
+[node name="Label" type="Label" parent="panel12"]
+layout_mode = 0
+offset_left = 200.0
+offset_right = 240.0
+offset_bottom = 23.0
+
+[connection signal="value_changed" from="panel12/HSlider" to="ball" method="_on_speed_slider_value_changed"]
+[connection signal="item_selected" from="panel12/OptionButton" to="ball" method="_on_mode_switch_item_selected"]
