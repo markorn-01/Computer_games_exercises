@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://fujwy2g8t74j"]
+
+[ext_resource type="Script" path="res://WORLD.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cpchqkjodas1x" path="res://joint.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://buxw5s6wcy1aw" path="res://bone3.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://djlmtrj1escwj" path="res://bone2.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://ca1t2173io2gj" path="res://bone1.png" id="5"]
+
+[node name="WORLD" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 502.0
+offset_bottom = 502.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+
+[node name="J1" type="Sprite2D" parent="."]
+position = Vector2(250, 250)
+texture = ExtResource("2")
+
+[node name="B1" type="Sprite2D" parent="J1"]
+z_index = 1
+position = Vector2(0, 40)
+texture = ExtResource("3")
+
+[node name="J2" type="Sprite2D" parent="J1/B1"]
+position = Vector2(0, 40)
+texture = ExtResource("2")
+
+[node name="B2" type="Sprite2D" parent="J1/B1/J2"]
+z_index = 1
+position = Vector2(0, 35)
+texture = ExtResource("4")
+
+[node name="J3" type="Sprite2D" parent="J1/B1/J2/B2"]
+position = Vector2(0, 35)
+texture = ExtResource("2")
+
+[node name="B3" type="Sprite2D" parent="J1/B1/J2/B2/J3"]
+z_index = 1
+position = Vector2(0, 25)
+texture = ExtResource("5")
+
+[node name="J4" type="Sprite2D" parent="J1/B1/J2/B2/J3/B3"]
+position = Vector2(0, 25)

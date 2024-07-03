@@ -1,0 +1,11 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1719324146
+bone1.png::CompressedTexture2D::4827718444614060593::1681719827::1719313686::1::::<><>::
+bone2.png::CompressedTexture2D::7814433241101211853::1681719827::1719313686::1::::<><>::
+bone3.png::CompressedTexture2D::3839068586767597534::1681719827::1719313686::1::::<><>::
+default_env.tres::Environment::6909823103764322162::1719313689::0::1::::<><>::
+icon.png::CompressedTexture2D::6242614531373940889::1681719827::1719313686::1::::<><>::
+joint.png::CompressedTexture2D::5830256908893518851::1681719827::1719313686::1::::<><>::
+separator.png::CompressedTexture2D::5608665004421207685::1681719827::1719313686::1::::<><>::
+WORLD.gd::GDScript::-1::1719313668::0::1::::<>Control<>::
+WORLD.tscn::PackedScene::392818816259782411::1719313689::0::1::::<><>::res://WORLD.gd<>uid://cpchqkjodas1x::::res://joint.png<>uid://buxw5s6wcy1aw::::res://bone3.png<>uid://djlmtrj1escwj::::res://bone2.png<>uid://ca1t2173io2gj::::res://bone1.png
