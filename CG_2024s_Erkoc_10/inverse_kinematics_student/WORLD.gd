@@ -17,10 +17,11 @@ const l2 = 70
 const l3 = 50
 
 func _process(delta):
+	print("type of J", type_string(typeof(J)))
+	print("J", J)
 	if ( (currentPos- targetPos).length() > 1): _inverseKinematic(delta)
 
 func _ready():
-	
 	#Put the window to the center
 	var screen_size = DisplayServer.screen_get_size();
 	var window_size = get_window().get_size();
@@ -56,6 +57,67 @@ func _inverseKinematic(delta):
 	
 	# compute J:
 	#TODO insert code here:
+	var J_list = [Vector2(
+		-l1 * sin(d1) - l2 * sin(d1 + d2) - l3 * sin(d1 + d2 + d3), 
+		l1 * cos(d1) + l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
+	), Vector2(
+		-l2 * sin(d1 + d2) - l3 * sin(d1 + d2 + d3), 
+		l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
+	), Vector2(
+		-l3 * sin(d1 + d2 + d3), 
+		l3 * cos(d1 + d2 + d3)
+	)]
+	J = Transform2D(J_list[0], J_list[1], J_list[2])
+	print(J_list)
+	
+	# OLD WAY
+	J.x = Vector2(
+		-l1 * sin(d1) - l2 * sin(d1 + d2) - l3 * sin(d1 + d2 + d3), 
+		l1 * cos(d1) + l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
+	)
+	J.y = Vector2(
+		-l2 * sin(d1 + d2) - l3 * sin(d1 + d2 + d3), 
+		l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
+	)
+	J.origin = Vector2(
+		-l3 * sin(d1 + d2 + d3), 
+		l3 * cos(d1 + d2 + d3)
+	)
+	# Compute pseudoinverse J†:
+	var JT = Transform2D(Vector2(J.x[0], J.y[0]), Vector2(J.x[1], J.y[1]), Vector2(J.origin[1], J.origin[0]))
+	var JJT = J*JT
+	print("JJT Type: ", J)
+	# Inverse of (J * JT)
+	var det = JJT.x.x * JJT.y.y - JJT.x.y * JJT.y.x
+	var JJT_inv = Transform2D(
+		Vector2(JJT.y.y / det, -JJT.x.y / det),
+		Vector2(-JJT.y.x / det, JJT.x.x / det),
+		Vector2()
+	)
+	var J_dagger = Transform2D(
+		JT.x * JJT_inv.x.x + JT.y * JJT_inv.y.x,
+		JT.x * JJT_inv.x.y + JT.y * JJT_inv.y.y,
+		Vector2()
+	)  # Pseudoinverse
+
+	# Compute angle updates:
+	var error = Vector2(ex, ey)
+	var dTheta = Vector3(
+		#J_dagger.x.dot(error), 
+		#J_dagger.y.dot(error), 
+		#J_dagger.origin.dot(error)
+	) * 0.01  # Scaling factor 0.01
+	
+	# Update angles:
+	d1 += dTheta.x
+	d2 += dTheta.y
+	d3 += dTheta.z
+	
+	# Update position:
+	update_current_position()
+	
+	# Rotate nodes (Note: In Godot3 use negative angles!):
+	update_node_rotation()
 	
 	# Hint: because of the matrix definition of Transform2D compute the transpose matrix of J here 
 	# and switch the indices later
@@ -74,7 +136,16 @@ func _inverseKinematic(delta):
 	
 	#rotate nodes (Note: In Godot3 use negative angles!):
 	#TODO : insert code here
-	
+
+func update_current_position():
+	currentPos.x = 250 + l1 * cos(d1) + l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
+	currentPos.y = 250 + l1 * sin(d1) + l2 * sin(d1 + d2) + l3 * sin(d1 + d2 + d3)
+
+func update_node_rotation():
+	get_node("J1").rotation = -d1
+	get_node("J1").get_node("B1").get_node("J2").rotation = -d2
+	get_node("J1").get_node("B1").get_node("J2").get_node("B2").get_node("J3").rotation = -d3
+
 func _input(ev):
    # Mouse in viewport coordinates
 	if ev is InputEventMouseButton:
