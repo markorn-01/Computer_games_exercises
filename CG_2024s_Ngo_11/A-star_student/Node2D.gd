@@ -106,15 +106,16 @@ class Astar:
 	
 	# Comparison function for sorting based on f cost
 	func _compare_cost(a, b):
-		return int(a[1]) - int(b[1])
-	
+		if int(a[1]) < int(b[1]):
+			return true
+		return false
+
 	func computePath() -> bool:
 		_openList.append([_start, _start.h])
 		
 		while _openList.size() > 0:
 			# Sort the open list manually based on f cost using the comparison function
 			_openList.sort_custom(_compare_cost)
-			
 			_currentNode = _openList.pop_front()[0]
 			
 			if _currentNode == _target:
@@ -166,3 +167,45 @@ func _ready():
 		return
 	else:
 		print("Error while computing path")
+
+
+# Please suggest new heuristic costs in the graph, so that the A* algorithm visits
+# less nodes to find the path than using the provided heuristic costs.
+#
+#
+#
+# To minimize the number of nodes visited, we need to ensure that the A* Algorithm
+# favors the shortest path at each update step.
+#
+# Starting from Saarbrücken, the cost for reaching Kaiserslautern (the shortest path)
+# is already lower than the cost for reaching Karlsruhe. Therefore, no changes are needed at this step.
+#
+# From Kaiserslautern, the algorithm currently moves to Ludwigshafen, but later finds that
+# going to Frankfurt is less costly. To prioritize Frankfurt earlier, we need to adjust its heuristic value.
+# Initially, the open list looks like this:
+#
+# [Ludwigshafen: 231, Frankfurt: 269, Karlsruhe: 285]
+#
+# By changing Frankfurt's heuristic cost from 96 to 1, the open list updates to:
+#
+# [Frankfurt: 174, Ludwigshafen: 231, Karlsruhe: 285]
+#
+# This change ensures that the algorithm selects Frankfurt as the next stop.
+#
+# From Frankfurt, the open list appears as follows:
+#
+# [Ludwigshafen: 231, Karlsruhe: 285, Würzburg: 289]
+#
+# Since Würzburg's heuristic value cannot be lowered further (h=0), we need to increase
+# the heuristic values for Ludwigshafen and Karlsruhe to prioritize Würzburg.
+#
+# We do this by changing Ludwigshafen's heuristic cost from 108 to 168 and Karlsruhe's from 140 to 145.
+#
+# Consequently, the open list becomes:
+#
+# [Würzburg: 289, Karlsruhe: 290, Ludwigshafen: 291]
+# 
+# ensuring the algorithm selects Würzburg as the next and last stop.
+#
+# With these adjustments, the algorithm reaches its destination with fewer steps.
+
