@@ -57,20 +57,6 @@ func _inverseKinematic(delta):
 	
 	# compute J:
 	#TODO insert code here:
-	var J_list = [Vector2(
-		-l1 * sin(d1) - l2 * sin(d1 + d2) - l3 * sin(d1 + d2 + d3), 
-		l1 * cos(d1) + l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
-	), Vector2(
-		-l2 * sin(d1 + d2) - l3 * sin(d1 + d2 + d3), 
-		l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
-	), Vector2(
-		-l3 * sin(d1 + d2 + d3), 
-		l3 * cos(d1 + d2 + d3)
-	)]
-	J = Transform2D(J_list[0], J_list[1], J_list[2])
-	print(J_list)
-	
-	# OLD WAY
 	J.x = Vector2(
 		-l1 * sin(d1) - l2 * sin(d1 + d2) - l3 * sin(d1 + d2 + d3), 
 		l1 * cos(d1) + l2 * cos(d1 + d2) + l3 * cos(d1 + d2 + d3)
@@ -84,8 +70,9 @@ func _inverseKinematic(delta):
 		l3 * cos(d1 + d2 + d3)
 	)
 	# Compute pseudoinverse J†:
-	var JT = Transform2D(Vector2(J.x[0], J.y[0]), Vector2(J.x[1], J.y[1]), Vector2(J.origin[1], J.origin[0]))
-	var JJT = J*JT
+	var JJT = Transform2D()
+	JJT.x = ()
+	
 	print("JJT Type: ", J)
 	# Inverse of (J * JT)
 	var det = JJT.x.x * JJT.y.y - JJT.x.y * JJT.y.x

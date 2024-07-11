@@ -146,7 +146,7 @@ class Astar:
 					neighborNode.g = tentative_g
 					neighborNode.lastNode = _currentNode
 					_openList.append([neighborNode, neighborNode.g + neighborNode.h])
-			
+			print("----------------------")
 			printOpenList()
 		
 		return false
