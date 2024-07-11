@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://br573rlsdacb8"]
+
+[ext_resource type="Script" path="res://Node2D.gd" id="1"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Path3D" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 63.1775
+offset_top = 132.205
+offset_right = 137.178
+offset_bottom = 146.205
+text = "Path3D"
+uppercase = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 59.565
+offset_top = 100.177
+offset_right = 153.565
+offset_bottom = 114.177
+text = "Your path is:"
+uppercase = true
