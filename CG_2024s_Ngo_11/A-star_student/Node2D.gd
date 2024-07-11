@@ -1,3 +1,9 @@
+# Name:        Quang Minh, Ngo;      student no.: 4742554
+# Coauthor:    Taha Beytullah Erkoc; student no.: 4740805
+# faculty:     Mathematics and Computer Science
+# discipline:  Data and Computer Science
+
+
 extends Node2D
 
 class Astar:
@@ -14,10 +20,10 @@ class Astar:
 		# An array of neighbour nodes
 		var neighbors = []
 		
-	# Default constructor 
-	# n - Node name
-	# cost - node cost
-		func _init(n, cost):
+		# Default constructor 
+		# n - Node name
+		# cost - node cost
+		func _init(n: String, cost: int):
 			self.name = n
 			self.h = cost
 			self.g = 0
@@ -25,7 +31,7 @@ class Astar:
 			
 		# Function to insert the neighbours
 		func insertNeighbours(n: StarNode, cost: int):
-			neighbors.push_back([n, cost])
+			self.neighbors.append([n, cost])
 			
 	# Stores the final path
 	var path = []
@@ -83,7 +89,7 @@ class Astar:
 		var next = _target
 		while next:
 			path.append(next)
-			print(String(next.name) + " " + String(next.g) )
+			print(str(next.name) + " " + str(next.g))
 			next = next.lastNode
 			
 	# Save the final path 
@@ -96,10 +102,52 @@ class Astar:
 	# Print the open list
 	func printOpenList():
 		for iter in _openList:
-			print(String(iter[0].name) + " " + String(iter[1]))
+			print(str(iter[0].name) + " " + str(iter[1]))
+	
+	# Comparison function for sorting based on f cost
+	func _compare_cost(a, b):
+		return int(a[1]) - int(b[1])
 	
 	func computePath() -> bool:
-		# Enter your code here. You may add new functions 
+		_openList.append([_start, _start.h])
+		
+		while _openList.size() > 0:
+			# Sort the open list manually based on f cost using the comparison function
+			_openList.sort_custom(_compare_cost)
+			
+			_currentNode = _openList.pop_front()[0]
+			
+			if _currentNode == _target:
+				return true
+			
+			_closeList.append(_currentNode)
+			
+			for neighbor in _currentNode.neighbors:
+				var neighborNode = neighbor[0]
+				var travelCost = neighbor[1]
+				
+				if _closeList.has(neighborNode):
+					continue
+				
+				var tentative_g = _currentNode.g + travelCost
+				var inOpenList = false
+				
+				for openNode in _openList:
+					if openNode[0] == neighborNode:
+						inOpenList = true
+						if tentative_g < neighborNode.g:
+							neighborNode.g = tentative_g
+							neighborNode.lastNode = _currentNode
+							openNode[1] = neighborNode.g + neighborNode.h
+						break
+				
+				if not inOpenList:
+					neighborNode.g = tentative_g
+					neighborNode.lastNode = _currentNode
+					_openList.append([neighborNode, neighborNode.g + neighborNode.h])
+			
+			printOpenList()
+		
 		return false
 			
 func _ready():
@@ -117,5 +165,4 @@ func _ready():
 		pathSearch.printPath()
 		return
 	else:
-		print("Error while computing path")	
-
+		print("Error while computing path")
